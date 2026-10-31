@@ -1,6 +1,6 @@
 # ST1519 Agile MLOps CA1 — Team Master Plan
 
-> **Status:** Proposed execution plan — team approval pending  
+> **Status:** Approved planning baseline — individual-code sharing policy provisional, pending tutor clarification  
 > **Course:** Singapore Polytechnic, Diploma in Applied AI & Analytics · AY2026/2027 Semester 2  
 > **Project:** SP-buy E-commerce Fraud Detection System  
 > **Team:** QiShun (Product Manager), Darryan, Ethan  
@@ -12,7 +12,7 @@
 > **Source of truth for requirements:** `SOC_AY2627_S2_ST1519_CA1_Spec(1).pdf` (lecturer's CA1 specification)  
 > **Execution tracking:** [GitHub repository](https://github.com/wqs0526/ecommerce-fraud-detection-mlops), approved GitHub Issues, Project views and reviewed code/PRs  
 > **Implementation baseline (user-reported, 31 Oct):** GitHub setup only; no technical implementation reported  
-> **Repository verification:** The team reports the repository is public; directory structure and permissions must be checked against GitHub before implementation.
+> **Repository verification:** 24 parent GitHub Issues and 98 sub-issues have been created. Verify the custom Project fields, native dependencies, teammate permissions and actual implementation layout before development.
 
 ## Contents
 
@@ -21,15 +21,18 @@
 3. [Rubric and scoring strategy](#2-rubric-driven-delivery-strategy)
 4. [Data requirements](#3-data-scope-and-controls)
 5. [Proposed architecture](#4-proposed-end-to-end-architecture)
-6. [GitHub workflow and repository](#5-github-delivery-structure)
-7. [Team roles and independent deliverables](#6-team-roles-and-collaboration)
-8. [Weekly sprint roadmap](#7-one-week-sprint-roadmap-and-milestones)
-9. [Definition of Done](#8-technical-definition-of-done)
-10. [Testing and evidence](#9-test-strategy-and-evidence-checklist)
-11. [Model selection protocol](#10-model-experiment-and-promotion-protocol)
-12. [Demo playbook](#11-demo-runbook)
-13. [Risks and decisions](#12-risks-mitigations-escalation)
-14. [Weekly reporting](#14-weekly-product-manager-check-in-template)
+6. [Provisional individual-work policy](#provisional-academic-integrity-and-repository-policy-tutor-clarification-pending)
+7. [GitHub workflow and repository](#5-github-delivery-structure)
+8. [Team roles and independent deliverables](#6-team-roles-and-collaboration)
+9. [Weekly sprint roadmap](#7-one-week-sprint-roadmap-and-milestones)
+10. [Definition of Done](#8-technical-definition-of-done)
+11. [Testing and evidence](#9-test-strategy-and-evidence-checklist)
+12. [Model selection protocol](#10-model-experiment-and-promotion-protocol)
+13. [Demo playbook](#11-demo-runbook)
+14. [Risks and decisions](#12-risks-mitigations-escalation)
+15. [Tutor-dependent decisions](#13-team-decisions-to-confirm)
+16. [Weekly reporting](#14-weekly-product-manager-check-in-template)
+17. [Project completion criteria](#15-definition-of-overall-project-completion)
 
 ---
 
@@ -39,7 +42,7 @@ This is our shared execution guide, **not a replacement for the official CA1 spe
 
 **Rules for everyone:**
 1. Read your GitHub Issue's **Description, Business Value, Acceptance Criteria, Dependencies, and Definition of Done** before starting.
-2. Work on an Issue-backed branch, create a pull request (PR), and obtain teammate review before merging where practicable.
+2. For **permitted shared group code**, work on an Issue-backed branch, create a pull request (PR), and obtain teammate review before merging where practicable. Individually assessed code remains separately controlled pending tutor clarification.
 3. Communicate blockers early; **do not wait** for unrelated work. Parallelise using agreed interfaces and representative local test data.
 4. Every member must independently train **at least two model versions** and independently complete their **individual business analytics and Prefect submission**. **Do not share individual code or writing**.
 5. The lecturer's new interview batch URLs **must not be obtained or processed before the scheduled interview**.
@@ -185,11 +188,35 @@ The CLI names, table design and code-level interfaces above are **recommendation
 
 ---
 
+## Provisional academic-integrity and repository policy (tutor clarification pending)
+
+**Decision status: OPEN — 31 October 2026.** This is a risk-control measure while the team awaits the lecturer's decision, not a claim that the lecturer approved any particular GitHub storage or collaboration arrangement.
+
+### Group and individual boundaries
+
+- **Shared group work:** Team-developed data ingestion, reusable cleaning and features, AWS RDS and MLflow infrastructure, common orchestration interfaces, architecture contracts, group documentation, and Scrum records may be coordinated in the shared repository under normal team review, subject to lecturer rules.
+- **Independently assessed work:** Every member independently develops at least two model versions, three business analytics queries, accompanying visualisations, one local Prefect workflow, any individually claimed advanced AWS Prefect implementation, and any assessed individual writing.
+- **Precaution until tutor reply:** Keep individually assessed source code and writing in separate independently controlled workspaces (local or individually private repositories). Do **not** place these files in shared GitHub branches/folders accessible to teammates or exchange them directly. Shared GitHub Issues may record the task, high-level progress, safe evidence, and agreed interfaces; they do not require uploading individually assessed code into the shared repository.
+- **Existing sub-issue language:** For 05.T1–T3, 06.T1–T3, 17.T1–T3, 18.T1–T3, 19.T1–T3, 20.T2–T4, and 24.T2–T4 (21 issues), interpret instructions to "commit to GitHub" or "share evidence" as **only to the student's independently controlled workspace or as permitted by the tutor**. Do not disclose private independent implementation or writing in team-readable issue descriptions/attachments.
+- **Group retraining integration:** PBI-14 still must automatically run the required independently developed team models. Agree on input/output schemas and callable model contracts without exchanging individual implementation code. The actual packaging, execution and permitted access mechanism must be confirmed with the tutor before integrating individually assessed code into shared systems. Do not claim this is already resolved.
+- **Shared evidence:** Avoid publishing credentials, personal data, forbidden assessment code, or sensitive screenshots. Preserve individual authorship and commit history where allowed.
+
+### Questions for tutor (decision pending)
+
+1. May independently developed code and individual writing be stored in separate paths or branches of the shared repository, or must each member use a private workspace?
+2. May teammates inspect/review independently assessed code for integration, or only discuss interfaces and outputs?
+3. How may the shared ETL/retraining orchestrator execute independently developed model implementations without breaching individual-work rules?
+4. What are the required individual submission locations and formats, including separately assessed advanced AWS Prefect work?
+
+**Decision record:** Tutor clarification not yet received; owner: QiShun; requested/response date: **TBD**; final rule: **TBD**. Once the lecturer replies, document the exact approved constraints and update the affected issues, repository access rules and integration design. Do not mark the pending questions completed in checklists yet.
+
+---
+
 ## 5. GitHub delivery structure
 
-### Current planning state (based on team conversation; verify in GitHub)
+### Current planning state (parent and sub-issues created; verify custom Project settings)
 - GitHub repository and Project exist.
-- **24 proposed PBIs across 6 Epics**; hybrid types: User Story, Feature, Technical Enabler, Spike and Bug (bugs created as needed).
+- **24 created parent PBIs and 98 created sub-issues across 6 Epics**; hybrid types: User Story, Feature, Technical Enabler, Spike and Bug (bugs created as needed).
 - Fibonacci story points are provisional, not a promised amount of hours.
 - Project views exist: **Product Backlog**, **Sprint Board**, **Sprint Planning**.
 - Team-oriented relationships are configured. **Blocked by** means a real prerequisite; **Relates to** indicates collaboration; **Parent / sub-issue** will be for sprint tasks.
@@ -235,15 +262,15 @@ The CLI names, table design and code-level interfaces above are **recommendation
 | 23 | Verify End-to-End System Integration | E6 | High |
 | 24 | Prepare Submission and Live Demonstration | E6 | High |
 
-**PBI-17, PBI-18 and PBI-19 are tracking umbrellas**, **not substitutes** for three independent student implementations. During sprint planning each student should separately track their own work/evidence without sharing their individual submission code or writing.
+**PBI-05, PBI-06, PBI-17, PBI-18 and PBI-19 are shared tracking umbrellas**, **not substitutes** for three independent student implementations. During sprint planning each student should separately track their own work/evidence without sharing their individual submission code or writing.
 
 ### Repository-specific onboarding and suggested layout (not asserted to exist)
 
-**Repository:** [`wqs0526/ecommerce-fraud-detection-mlops`](https://github.com/wqs0526/ecommerce-fraud-detection-mlops). The team reports that the repository is now public; its current folders and access permissions still need to be checked. Do **not** infer its current directory listing, commit history, GitHub Issue numbers or Project settings. QiShun should verify public access and grant teammates repository write and Project access as appropriate; avoid publishing credentials or unnecessary public data. **Do not create new folders purely to match this example**—first inspect `README`, branches, `.github/ISSUE_TEMPLATE`, existing files and team conventions.
+**Repository:** [`wqs0526/ecommerce-fraud-detection-mlops`](https://github.com/wqs0526/ecommerce-fraud-detection-mlops). The team reports that the repository is now public; its current folders and access permissions still need to be checked. The parent issues are numbered #4–#27 and the planned sub-issues extend through #125; however, do **not** infer the current directory listing, commit history or GitHub Project custom fields without verification. QiShun should verify public access and grant teammates repository write and Project access as appropriate; avoid publishing credentials or unnecessary public data. **Do not create new folders purely to match this example**—first inspect `README`, branches, `.github/ISSUE_TEMPLATE`, existing files and team conventions.
 
 **First repository-fit checklist (QiShun leads; all verify):**
-- [ ] Confirm all three can view the repository, 24 Issues, all Project views and issue relationships.
-- [ ] Add `MASTER_PLAN.md` at repository root and link it from README; review it via PR.
+- [ ] Confirm all three can view the repository, 24 parent Issues, 98 sub-issues, all Project views and issue relationships.
+- [ ] Verify `MASTER_PLAN.md` at the repository root is current, link it from README, and review changes by PR where permitted.
 - [ ] Confirm `.gitignore`, `.env.example` and secret-handling instructions before adding cloud configuration.
 - [ ] Record actual directories and entrypoints in README; adapt suggested layout instead of assuming it exists.
 - [ ] Apply branch protection/review conventions supported by the repository/account; verify they do not block timely merges.
@@ -301,7 +328,7 @@ The CLI names, table design and code-level interfaces above are **recommendation
 
 ## 6. Team roles and collaboration
 
-The following shared-workstream leads are **proposed** and require agreement during sprint planning. Each PBI should have a named owner and reviewer. Ownership of shared work does not replace the individual requirements.
+The following shared-workstream responsibilities reflect the agreed planning baseline; confirm reviewer assignments and any later changes during sprint planning. Each PBI should have a named owner and reviewer. Ownership of shared work does not replace the individual requirements.
 
 | Member | Shared focus | Proposed lead PBIs | Collaboration and review |
 |---|---|---|---|
@@ -337,6 +364,9 @@ The following shared-workstream leads are **proposed** and require agreement dur
 ---
 
 ## 7. One-week sprint roadmap and milestones
+
+**Confirmed dependency correction:** Initial MLflow deployment PBI-09 (Sprint 1) is not blocked by full configuration standardisation PBI-15 (Sprint 2). PBI-09 uses secure minimal configuration; PBI-15 improves it later. The change has been made in the GitHub issue descriptions and native dependency relationship.
+
 
 **Cadence agreed by the team:** **7 calendar days per sprint**. Proposed boundaries below use **Monday–Sunday** solely as a planning convention; align GitHub Iteration start/end days to the lecturer's actual Week 3/4/5/6 lesson calendar. The specification does **not** define a Monday sprint start. Keep milestone deadlines as fixed calendar dates, even if they fall inside a sprint.
 
@@ -525,7 +555,7 @@ This plan intentionally leaves unresolved project decisions visible rather than 
 - [ ] Choose AWS RDS schema and ingestion idempotency strategy.
 - [ ] Confirm MLflow deployment/storage design within Academy Learner Lab and the compliant GenAI research record.
 - [ ] Finalise metrics, data split and champion-promotion rule after observing dataset characteristics.
-- [ ] Decide where independent submissions are stored **without sharing independent code/writing**.
+- [ ] **Pending tutor response:** Confirm where independent code/writing may be stored, whether peer review is permitted, and how the group may invoke independently authored models without sharing source.
 - [ ] Clarify advanced F3 Prefect grading per individual with module tutor.
 - [ ] Obtain official PB and Part 2 templates; check submission requirements and file naming.
 - [ ] Confirm exact Week 7 interview slot and service access conditions.
