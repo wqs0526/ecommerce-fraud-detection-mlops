@@ -8,7 +8,7 @@
 > **Sprint cadence:** **1 week per sprint**  
 > **Repository:** https://github.com/wqs0526/ecommerce-fraud-detection-mlops  
 > **Document owner:** QiShun — Product Manager / backlog coordinator  
-> **Last updated:** 31 October 2026  
+> **Last reconciled:** 31 October 2026 — Steps 1–4 planning corrections  
 > **Source of truth for requirements:** `SOC_AY2627_S2_ST1519_CA1_Spec(1).pdf` (lecturer's CA1 specification)  
 > **Execution tracking:** [GitHub repository](https://github.com/wqs0526/ecommerce-fraud-detection-mlops), approved GitHub Issues, Project views and reviewed code/PRs  
 > **Implementation baseline (user-reported, 31 Oct):** GitHub setup only; no technical implementation reported  
@@ -25,14 +25,15 @@
 7. [GitHub workflow and repository](#5-github-delivery-structure)
 8. [Team roles and independent deliverables](#6-team-roles-and-collaboration)
 9. [Weekly sprint roadmap](#7-one-week-sprint-roadmap-and-milestones)
-10. [Definition of Done](#8-technical-definition-of-done)
-11. [Testing and evidence](#9-test-strategy-and-evidence-checklist)
-12. [Model selection protocol](#10-model-experiment-and-promotion-protocol)
-13. [Demo playbook](#11-demo-runbook)
-14. [Risks and decisions](#12-risks-mitigations-escalation)
-15. [Tutor-dependent decisions](#13-team-decisions-to-confirm)
-16. [Weekly reporting](#14-weekly-product-manager-check-in-template)
-17. [Project completion criteria](#15-definition-of-overall-project-completion)
+10. [Integration contracts and evidence corrections](#integration-contracts-and-evidence-corrections-planning-steps-34)
+11. [Definition of Done](#8-technical-definition-of-done)
+12. [Testing and evidence](#9-test-strategy-and-evidence-checklist)
+13. [Model selection protocol](#10-model-experiment-and-promotion-protocol)
+14. [Demo playbook](#11-demo-runbook)
+15. [Risks and decisions](#12-risks-mitigations-escalation)
+16. [Tutor-dependent decisions](#13-team-decisions-to-confirm)
+17. [Weekly reporting](#14-weekly-product-manager-check-in-template)
+18. [Project completion criteria](#15-definition-of-overall-project-completion)
 
 ---
 
@@ -219,8 +220,8 @@ The CLI names, table design and code-level interfaces above are **recommendation
 - **24 created parent PBIs and 98 created sub-issues across 6 Epics**; hybrid types: User Story, Feature, Technical Enabler, Spike and Bug (bugs created as needed).
 - Fibonacci story points are provisional, not a promised amount of hours.
 - Project views exist: **Product Backlog**, **Sprint Board**, **Sprint Planning**.
-- Team-oriented relationships are configured. **Blocked by** means a real prerequisite; **Relates to** indicates collaboration; **Parent / sub-issue** will be for sprint tasks.
-- Task owners and sprint assignments are not yet finalised.
+- The issue descriptions document dependencies; verify **native** GitHub issue relationships in the Project UI. **Blocked by** is a strict prerequisite; **Relates to** indicates collaboration; **Parent / sub-issue** links must be checked rather than inferred from titles.
+- **Approved planned owners and sprint allocations are documented below.** Confirm that GitHub Project custom fields and actual team commitments match; the conditional advanced work remains uncommitted.
 
 ### Epics and traceability
 
@@ -233,34 +234,38 @@ The CLI names, table design and code-level interfaces above are **recommendation
 | **E5** Business Analytics & Prefect | Independent insights, visualisations and flow automation | 17–20 |
 | **E6** Agile Management, Testing & Delivery | Backlog, scrum, integration and submission | 21–24 |
 
-### Complete PBI index
+### Approved complete PBI index (planning baseline, 31 October 2026)
 
-| PBI | Title | Epic | Initial priority |
-|---|---|---|---|
-| 01 | Explore Historical Datasets | E1 | High |
-| 02 | Implement Reusable Data Cleaning | E1 | High |
-| 03 | Engineer Fraud Detection Features | E1 | High |
-| 04 | Validate Data Processing Consistency | E1 | Medium |
-| 05 | Develop Baseline Fraud Detection Models | E2 | High |
-| 06 | Optimise and Compare Model Versions | E2 | High |
-| 07 | Track Machine Learning Experiments | E2 | High |
-| 08 | Register and Promote Champion Model | E2 | High |
-| 09 | Deploy MLflow on AWS Elastic Beanstalk | E3 | High |
-| 10 | Investigate Robust MLflow Architecture | E3 | High |
-| 11 | Implement and Document Robust MLflow Infrastructure | E3 | High |
-| 12 | Provision AWS RDS MySQL Database | E4 | High |
-| 13 | Automate Data Ingestion and Loading | E4 | High |
-| 14 | Automate Retraining on Updated Data | E4 | High |
-| 15 | Externalise System Configuration | E4 | High |
-| 16 | Ensure Pipeline Reliability and Performance | E4 | High |
-| 17 | Develop Fraud Business Analytics | E5 | High |
-| 18 | Visualise Fraud Trends and Patterns | E5 | High |
-| 19 | Automate Analytics with Prefect | E5 | High |
-| 20 | Deploy Prefect to AWS | E5 | Low / advanced |
-| 21 | Establish GitHub Product Backlog | E6 | Critical |
-| 22 | Manage Sprint Planning and Scrum Reviews | E6 | High |
-| 23 | Verify End-to-End System Integration | E6 | High |
-| 24 | Prepare Submission and Live Demonstration | E6 | High |
+| PBI | Title | Epic | Accountable lead | Sprint | Parent SP | Sub-issues |
+|---|---|---|---|---|---:|---:|
+| [01](https://github.com/wqs0526/ecommerce-fraud-detection-mlops/issues/4) | Explore Historical Datasets | E1 | QiShun | S1 | 5 | 4 |
+| [02](https://github.com/wqs0526/ecommerce-fraud-detection-mlops/issues/5) | Implement Reusable Data Cleaning | E1 | Ethan | S2 | 5 | 3 |
+| [03](https://github.com/wqs0526/ecommerce-fraud-detection-mlops/issues/6) | Engineer Fraud Detection Features | E1 | QiShun | S2 | 8 | 3 |
+| [04](https://github.com/wqs0526/ecommerce-fraud-detection-mlops/issues/7) | Validate Data Processing Consistency | E1 | Ethan | S3 | 5 | 3 |
+| [05](https://github.com/wqs0526/ecommerce-fraud-detection-mlops/issues/8) | Develop Baseline Fraud Detection Models | E2 | All three | S2 | 5 | 4 |
+| [06](https://github.com/wqs0526/ecommerce-fraud-detection-mlops/issues/9) | Optimise and Compare Model Versions | E2 | All three | S3 | 8 | 4 |
+| [07](https://github.com/wqs0526/ecommerce-fraud-detection-mlops/issues/10) | Track Machine Learning Experiments | E2 | Darryan | S2 | 5 | 3 |
+| [08](https://github.com/wqs0526/ecommerce-fraud-detection-mlops/issues/11) | Register and Promote Champion Model | E2 | Darryan | S3 | 5 | 2 |
+| [09](https://github.com/wqs0526/ecommerce-fraud-detection-mlops/issues/12) | Deploy MLflow on AWS Elastic Beanstalk | E3 | Darryan | S1 | 8 | 4 |
+| [10](https://github.com/wqs0526/ecommerce-fraud-detection-mlops/issues/13) | Investigate Robust MLflow Architecture | E3 | Darryan | S2 | 3 | 2 |
+| [11](https://github.com/wqs0526/ecommerce-fraud-detection-mlops/issues/14) | Implement and Document Robust MLflow Infrastructure | E3 | Darryan | S3 | 8 | 3 |
+| [12](https://github.com/wqs0526/ecommerce-fraud-detection-mlops/issues/15) | Provision AWS RDS MySQL Database | E4 | Ethan | S1 | 5 | 4 |
+| [13](https://github.com/wqs0526/ecommerce-fraud-detection-mlops/issues/16) | Automate Data Ingestion and Loading | E4 | QiShun | S3 | 8 | 4 |
+| [14](https://github.com/wqs0526/ecommerce-fraud-detection-mlops/issues/17) | Automate Retraining on Updated Data | E4 | Darryan | S3 | 8 | 4 |
+| [15](https://github.com/wqs0526/ecommerce-fraud-detection-mlops/issues/18) | Externalise System Configuration | E4 | Ethan | S2 | 3 | 2 |
+| [16](https://github.com/wqs0526/ecommerce-fraud-detection-mlops/issues/19) | Ensure Pipeline Reliability and Performance | E4 | Ethan; QiShun benchmarks | S4 | 8 | 4 |
+| [17](https://github.com/wqs0526/ecommerce-fraud-detection-mlops/issues/20) | Develop Fraud Business Analytics | E5 | All three | S3 | 5 | 3 |
+| [18](https://github.com/wqs0526/ecommerce-fraud-detection-mlops/issues/21) | Visualise Fraud Trends and Patterns | E5 | All three | S4 (start S3) | 3 | 3 |
+| [19](https://github.com/wqs0526/ecommerce-fraud-detection-mlops/issues/22) | Automate Analytics with Prefect | E5 | All three | S4 (start S3) | 8 | 4 |
+| [20](https://github.com/wqs0526/ecommerce-fraud-detection-mlops/issues/23) | Deploy Prefect to AWS | E5 | QiShun provisional; individual tasks all three | Conditional S4 | 13 | 5 |
+| [21](https://github.com/wqs0526/ecommerce-fraud-detection-mlops/issues/24) | Establish GitHub Product Backlog | E6 | QiShun | S0–S2 | 3 | 4 |
+| [22](https://github.com/wqs0526/ecommerce-fraud-detection-mlops/issues/25) | Manage Sprint Planning and Scrum Reviews | E6 | QiShun coordinates | S1–S4 | 3 | 16 |
+| [23](https://github.com/wqs0526/ecommerce-fraud-detection-mlops/issues/26) | Verify End-to-End System Integration | E6 | Ethan | S4 | 5 | 4 |
+| [24](https://github.com/wqs0526/ecommerce-fraud-detection-mlops/issues/27) | Prepare Submission and Live Demonstration | E6 | Ethan coordinates | S4 | 5 | 6 |
+
+**Totals:** 24 parent PBIs; **98** sub-issues; **142 SP** across all parents (**129 SP mandatory/cross-sprint plus 13 SP conditional PBI-20**). Sub-issues remain unpointed to prevent double counting. PBI-21/22 are cross-sprint coordination and should not be double-counted when reporting sprint throughput.
+
+**Planned sprint distribution excluding cross-sprint coordination and conditional advanced work:** S1 = 18 SP (12 tasks); S2 = 29 SP (17 tasks); S3 = 47 SP (23 tasks); S4 = 29 SP (21 tasks). Cross-sprint PBI-21/22 = 6 SP (20 tasks); conditional PBI-20 = 13 SP (5 tasks). Sprint 3 is capacity-sensitive, not automatically committed until team confirms capacity.
 
 **PBI-05, PBI-06, PBI-17, PBI-18 and PBI-19 are shared tracking umbrellas**, **not substitutes** for three independent student implementations. During sprint planning each student should separately track their own work/evidence without sharing their individual submission code or writing.
 
@@ -308,7 +313,7 @@ The CLI names, table design and code-level interfaces above are **recommendation
     └── member_c/
 ```
 
-**Do not assume individual submissions belong in the shared repository.** The lecturer explicitly forbids sharing individual code or writing. Safer default: keep individual implementations in private, independently authored workspaces and only share non-code interface requirements and high-level progress; confirm permissible submission location with tutor.
+**Do not assume individual submissions belong in the shared repository.** The course instructions as recorded in this plan prohibit sharing individual code or writing; tutor clarification on storage/access is pending. Safer default: keep individual implementations in private, independently authored workspaces and only share non-code interface requirements and high-level progress; confirm permissible submission location with tutor.
 
 ### Branch / PR convention
 - One Issue → one feature branch where practicable: `feature/pbi-13-batch-ingestion`, `infra/pbi-09-mlflow-eb`, `docs/pbi-24-demo-runbook`.
@@ -330,13 +335,13 @@ The CLI names, table design and code-level interfaces above are **recommendation
 
 The following shared-workstream responsibilities reflect the agreed planning baseline; confirm reviewer assignments and any later changes during sprint planning. Each PBI should have a named owner and reviewer. Ownership of shared work does not replace the individual requirements.
 
-| Member | Shared focus | Proposed lead PBIs | Collaboration and review |
+| Member | Shared focus | Accountable parent PBIs / coordination | Review and assistance |
 |---|---|---|---|
-| **QiShun — Product Manager** | Product backlog, architecture, data contracts and cross-service integration | 21–22, 01, 03, 14, 16, 23 | Coordinates stakeholder/rubric alignment; reviews data and infrastructure interfaces; leads integration demos |
-| **Darryan** | Model experimentation and MLflow platform | 05–08, 09–11 | Maintains shared experiment logging/registry conventions and reviews training interfaces with team |
-| **Ethan** | Reusable data processing, database, configuration and verification | 02, 04, 12, 15; defined components of 13 and 23 | Coordinates schema/ETL contracts, produces database and validation tests, and reviews handoffs with team |
+| **QiShun — Product Manager** | Backlog, EDA, features, ETL and team coordination | **01, 03, 13, 21**; coordinate **22**, 16.T3 benchmarking, 23.T1 integration, 24.T5 presentation; **20 provisional** | Aligns data/ETL interfaces with Ethan and retraining interface with Darryan; tracks milestones and sprint evidence |
+| **Darryan** | MLflow infrastructure, model registry and automated retraining | **07–11, 14**; support group model tasks 05/06 and retraining verification 16.T4 / 23.T2 | Coordinates reproducible experiment tracking, training contracts and retraining integration |
+| **Ethan** | Cleaning, data consistency, RDS, external configuration, QA, final acceptance and submission | **02, 04, 12, 15, 16, 23, 24**; supports 13.T3 database loading | Coordinates data validation, integrity testing, acceptance evidence and group submission check |
 
-**Shared delivery:** PBI-13 (batch ingestion) and PBI-24 (submissions/presentation) are coordinated across all three. QiShun leads integration of PBI-13, while Ethan owns its database/validation components and Darryan validates its model-training interface. The team agrees final ownership and workload before moving PBIs into a sprint.
+**Shared parent PBIs:** **05, 06, 17, 18, 19** have an individually owned sub-issue for each member. Shared parent story points do not assign all individual effort to one person. **PBI-20 is conditional:** 20.T1 feasibility, 20.T2–T4 independently attributable deployment tasks, 20.T5 verification; no tutor approval or feasibility success is implied.
 
 **All three independently complete:** at least two ML model versions each; three meaningful business analytics queries each; individually authored visualisations/analysis and local Prefect flow each; individual submissions and Q&A. Do **not** share individual code or writing, as specified by the lecturer.
 
@@ -365,21 +370,25 @@ The following shared-workstream responsibilities reflect the agreed planning bas
 
 ## 7. One-week sprint roadmap and milestones
 
-**Confirmed dependency correction:** Initial MLflow deployment PBI-09 (Sprint 1) is not blocked by full configuration standardisation PBI-15 (Sprint 2). PBI-09 uses secure minimal configuration; PBI-15 improves it later. The change has been made in the GitHub issue descriptions and native dependency relationship.
+**Approved planning cadence:** seven calendar days; Monday–Sunday is a team planning convention, not an additional requirement imposed by the lecturer. GitHub Iteration fields must be checked against these dates.
 
+| Sprint | Dates (SGT) | Approved parent PBI allocation | Story points | Sub-issues | Required focus and evidence |
+|---|---|---|---:|---:|---|
+| **S0 — Backlog setup** | 26 Oct–1 Nov | **21 begins; 22 planning** | Cross-sprint | Part of cross-sprint 20 | GitHub backlog, ownership, estimation and dependencies; 24 parents/98 sub-issues created; technical implementation not yet verified |
+| **S1 — Foundations** | 2–8 Nov | **01, 09, 12** | **18** | **12** | Historical EDA, initial Docker/Elastic Beanstalk MLflow, AWS RDS; minimal safe env configuration in PBI-09 without waiting for PBI-15 |
+| **S2 — Data/models and Part 1** | 9–15 Nov | **02, 03, 05, 07, 10, 15** | **29** | **17** | Reusable cleaning/features, all three individual baselines, MLflow logging conventions, robust-architecture research and formal configuration; Part 1 submitted **Fri 13 Nov 4 PM** |
+| **S3 — Retraining integration** | 16–22 Nov | **04, 06, 08, 11, 13, 14, 17** | **47** | **23** | Validation; individual model improvement; top-two registry/champion; persistent MLflow; three-URL ETL, combined-data retraining; individual analytics. Start PBI-18/19 preparation if feasible. **Target permitted first end-to-end benchmark: Thu 19 Nov** |
+| **S4 — Mandatory verification and submission** | 23–29 Nov | **16, 18, 19, 23, 24** | **29** | **21** | Full reliability/performance and acceptance tests; each member's own three charts and local Prefect **server + flow + tasks**; submission and demo preparation **before Fri 27 Nov 4 PM** |
+| **Cross-sprint management** | S0–S4 | **21, 22** | **6** | **20** | Part 1 submission, backlog and weekly graded Scrum/PR review evidence; count parent SP only once |
+| **Advanced conditional work** | Conditional S4 | **20** | **13** | **5** | Feasibility gate; AWS-hosted Prefect and independently attributable evidence only if feasible and permitted; do not displace mandatory work |
 
-**Cadence agreed by the team:** **7 calendar days per sprint**. Proposed boundaries below use **Monday–Sunday** solely as a planning convention; align GitHub Iteration start/end days to the lecturer's actual Week 3/4/5/6 lesson calendar. The specification does **not** define a Monday sprint start. Keep milestone deadlines as fixed calendar dates, even if they fall inside a sprint.
+**Mandatory parent subtotal excluding cross-sprint management:** 123 SP. **Including PBI-21 and PBI-22:** 129 SP. **Including conditional PBI-20:** 142 SP. These are plan estimates, not measured capacity or a promise that all work will fit.
 
-| Sprint | Suggested dates (SGT) | Sprint goal and planned focus | Reviewable evidence / gate |
-|---|---|---|---|
-| **Sprint 0 — Backlog sign-off** | **26 Oct–1 Nov** | GitHub Issue/label/field/view/relationship setup; final rubric cross-check; team ownership discussion | Confirm 24 PBIs, dependencies and stakeholder value; status **GitHub-only completed**, code not started |
-| **Sprint 1 — Foundation contracts** | **2–8 Nov** | **QiShun:** shared EDA/data contract and review; **Darryan:** MLflow Docker smoke test and baseline training skeleton; **Ethan:** RDS connection/schema and config checklist. Team planning/estimates; PBI-01 EDA, PBI-12 RDS design/provision, PBI-09 MLflow Docker baseline, PBI-15 env configuration; define ETL↔training interfaces | EDA initial findings; reproducible DB connection and MLflow smoke run **where feasible**; no unsupported Done claims |
-| **Sprint 2 — Backlog submission + early build** | **9–15 Nov** | **QiShun:** reusable feature contract and ETL integration skeleton; **Darryan:** model baselines and tracked runs; **Ethan:** cleaning/validation tests and DB loading smoke test. Refine PBI-02/03/04; PBI-05 baseline prototypes; finalize PB submission; maintain setup tasks | **Part 1 deadline Fri 13 Nov 4 PM**: reviewed template submitted and receipt retained; initial data/model evidence |
-| **Sprint 3 — End-to-end vertical slice** | **16–22 Nov** | **QiShun:** orchestration/integration; **Darryan:** MLflow registry and model tuning support; **Ethan:** test batch ingestion verification and targeted defects. PBI-07, 13, 14: one-command batch→RDS→all-model runs→MLflow; iterate PBI-06 and model registry PBI-08; independent PBI-17/18/19 work; PBI-10 research and PBI-11 upgrade | End-to-end permitted sample batch; 3×2 model versions; top-two registry/champion; analytics progress each member |
-| **Sprint 4 — Submission and hardening** | **23–29 Nov** | **All:** independent Prefect demo rehearsals and final model checks; **QiShun:** timed integration run; **Darryan:** MLflow run/registry proof; **Ethan:** verification checklist and repeatability tests. PBI-16/23 performance/reliability, individual Prefect dry runs, presentation, MLflow robustness and PBI-20 advanced attempt if feasible; finish paperwork early | **Part 2 Fri 27 Nov 4 PM**: group+individual deliverables, SPA and declarations submitted; timed dry-run records |
-| **Interview readiness** | **Week 7 — tutor schedule TBA** | Maintain healthy services; rehearse 10-minute presentation and live unseen-batch run; quiz all three on shared decisions | Group and each individual pipeline **≤180 s**; tutor URLs used **only when handed over at interview** |
+**Fixed deadlines:** Part 1 — **13 November 2026 at 4 PM SGT**; Part 2 — **27 November 2026 at 4 PM SGT**; Week 7 interview time set by tutor. **The Part 2 deadline occurs two days before Sprint 4 ends.** Submit and verify deliverables before that deadline; the remaining Sprint 4 days do not extend the assessment deadline.
 
-**Schedule risks:** As of 31 October there are fewer than four weeks before Part 2; this is an aggressive timeline. If GitHub-only work is complete and nothing is coded, run infrastructure/data/model prototyping **in parallel immediately**, while maintaining Part 1 documentation. Escalate blockers at the earliest one-week sprint check-in, not after the next iteration. Do not defer individual Prefect work entirely until Sprint 4.
+**Important sequencing corrections:** PBI-09 (S1) is **not blocked by PBI-15 (S2)**; secure minimal configuration is sufficient for the initial MLflow server, with standardisation later. PBI-07 logging conventions/utilities can start alongside PBI-05; its end-to-end verification depends on model runs. PBI-17 queries can start against existing historical RDS data before PBI-13 incoming-batch ETL completes, but freshness testing depends on that ingestion. PBI-16.T3 is allocated to S4, with a **planned early Sprint 3 integration/baseline checkpoint** coordinated with PBI-13/14.
+
+**Risks:** Sprint 3 has the highest relative commitment (47 SP) and several hard integration prerequisites. Track a working vertical slice early, address missing contracts, and renegotiate sprint commitment when actual capacity or blockers dictate. No test is passed merely because its GitHub checklist exists. **Do not access the tutor-reserved interview CSV URLs before the interview.**
 
 ### One-week sprint operating procedure
 
@@ -393,6 +402,16 @@ The following shared-workstream responsibilities reflect the agreed planning bas
 
 A sprint is **not completed** simply because tickets moved to Done. Its planned demonstration must be usable from the latest integrated code, accepted by at least one teammate, and accompanied by linked evidence. Carry unfinished PBIs forward; do not silently reduce their acceptance criteria to fit the seven-day window. If a weekly sprint starts on another day, update dates in the GitHub Iteration field and in this plan consistently.
 
+
+
+### Integration contracts and evidence corrections (planning Steps 3–4)
+
+- **PBI-19 individual local Prefect (issues #103–105):** Each member must install/start their own **local Prefect server**, configure the API endpoint, demonstrate flow runs/task states/logs in the local UI, execute three own RDS analytics queries and regenerate three charts in **under 180 seconds**. These acceptance criteria were merged into the individual GitHub descriptions; actual execution has not yet been demonstrated.
+- **13.T4 ETL completion contract (issue #92):** Three configurable URLs, batch identity, committed row counts, explicit success/failure and only report success after the required RDS commit. Downstream retraining must not start after a failed/incomplete load.
+- **14.T2 common model training contract (issue #94):** Agree on feature/label inputs, model owner/version, dataset/batch context, metrics, artifact references and errors. The mechanism for integrating independently assessed implementations remains **pending tutor clarification**.
+- **14.T3 retraining orchestrator contract (issue #95):** Consume verified ETL result; run all required member models from combined historical + new labelled RDS data; record per-model status, MLflow run references and total result; required model failure cannot yield overall success. Confirm lecturer's precise interpretation of the model-count requirement before reducing the six-version planning scope.
+- **16.T3 runtime benchmark (issue #109):** Attempt the first **complete** permitted end-to-end benchmark by **19 Nov (S3 planning target)**. Record stage times, total wall time, expected/actual model runs, data sizes and MLflow evidence. Final qualification requires repeated complete successful group runs **under 180 seconds**, not ETL-only timing.
+- **Academic integrity:** Do not upload independently assessed source/writing to group-visible paths until tutor clarifies. Group interface documents and permitted shared orchestration code may be developed; final permissible execution/packaging of individual models is unresolved.
 
 ## 8. Technical Definition of Done
 
@@ -568,6 +587,22 @@ This plan intentionally leaves unresolved project decisions visible rather than 
 - [ ] **Verify repository and Project access for all members**, give Darryan and Ethan necessary write/Project access, verify AWS Academy Learner Lab, and record the actual directory structure before creating any suggested folders.
 - [ ] Agree how to split and estimate three members' independent PBI-17/18/19 work without sharing individual code or writing.
 - [ ] Agree minimum vertical-slice completion by Sprint 3 and fall-back plan if cloud services are unavailable.
+
+### Decision and verification register — 31 October 2026
+
+| Decision / check | Current status | Owner | Required follow-up |
+|---|---|---|---|
+| PBI-09 no longer blocked by PBI-15 | **Resolved — GitHub issue corrected** | Darryan / Ethan | Verify Project native relationship and maintain safe minimal configuration |
+| Individual source sharing, review and submission locations | **Open — tutor clarification pending** | QiShun | Record official tutor response; then revise provisional policy and the 21 individual issues if needed |
+| Group retraining integration mechanism for individual models | **Open — tutor clarification pending** | Darryan / QiShun | Agree approved packaging/entrypoint mechanism without impermissible source sharing |
+| PBI-19 local server/UI requirements | **Descriptions updated; implementation not tested** | All three | Each member independently demonstrates local server/flow/logs and runtime |
+| ETL / training / orchestration interface requirements | **Descriptions updated; code interfaces not yet built** | QiShun / Darryan / Ethan | Implement and contract-test 13.T4, 14.T2, 14.T3 |
+| First complete group benchmark | **Planned, not executed** | QiShun with Darryan/Ethan | Target 19 Nov using permitted test data; measure complete pipeline |
+| Exact minimum model count retrained | **Tutor interpretation to confirm** | Darryan | Maintain six-model-version plan unless official clarification permits a different scope |
+| Advanced AWS Prefect individual 5% and metadata backend | **Conditional; clarification and Learner Lab feasibility pending** | QiShun / all | Obtain tutor interpretation; test permissions and supported Prefect metadata engine; Go/No-Go |
+| Project custom fields, native parent/child links and iterations | **Not fully independently verified** | QiShun | Audit GitHub Project UI for owner/status/priority/epic/iteration/parent relationships |
+| Sprint 3 capacity and reviewer assignment | **To validate at Sprint Planning** | All three; QiShun coordinates | Agree realistic commitment, reviewer ownership and midpoint integration gates |
+| Part 1 / Part 2 submission receipts | **Not yet submitted as of 31 Oct** | QiShun / Ethan | Verify actual platform confirmation at fixed deadlines; do not mark completed early |
 
 ## 14. Weekly Product Manager check-in template
 
