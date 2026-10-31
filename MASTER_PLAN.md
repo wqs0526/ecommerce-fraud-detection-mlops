@@ -1,0 +1,582 @@
+# ST1519 Agile MLOps CA1 — Team Master Plan
+
+> **Status:** Proposed execution plan — team approval pending  
+> **Course:** Singapore Polytechnic, Diploma in Applied AI & Analytics · AY2026/2027 Semester 2  
+> **Project:** SP-buy E-commerce Fraud Detection System  
+> **Team:** QiShun (Product Manager), Darryan, Ethan  
+> **Team size:** 3  
+> **Sprint cadence:** **1 week per sprint**  
+> **Repository:** https://github.com/wqs0526/ecommerce-fraud-detection-mlops  
+> **Document owner:** QiShun — Product Manager / backlog coordinator  
+> **Last updated:** 31 October 2026  
+> **Source of truth for requirements:** `SOC_AY2627_S2_ST1519_CA1_Spec(1).pdf` (lecturer's CA1 specification)  
+> **Execution tracking:** [GitHub repository](https://github.com/wqs0526/ecommerce-fraud-detection-mlops), approved GitHub Issues, Project views and reviewed code/PRs  
+> **Implementation baseline (user-reported, 31 Oct):** GitHub setup only; no technical implementation reported  
+> **Repository verification:** The team reports the repository is public; directory structure and permissions must be checked against GitHub before implementation.
+
+## Contents
+
+1. [Team rules and deadlines](#0-read-this-first)
+2. [Product vision and stakeholders](#1-product-vision-and-stakeholder-value)
+3. [Rubric and scoring strategy](#2-rubric-driven-delivery-strategy)
+4. [Data requirements](#3-data-scope-and-controls)
+5. [Proposed architecture](#4-proposed-end-to-end-architecture)
+6. [GitHub workflow and repository](#5-github-delivery-structure)
+7. [Team roles and independent deliverables](#6-team-roles-and-collaboration)
+8. [Weekly sprint roadmap](#7-one-week-sprint-roadmap-and-milestones)
+9. [Definition of Done](#8-technical-definition-of-done)
+10. [Testing and evidence](#9-test-strategy-and-evidence-checklist)
+11. [Model selection protocol](#10-model-experiment-and-promotion-protocol)
+12. [Demo playbook](#11-demo-runbook)
+13. [Risks and decisions](#12-risks-mitigations-escalation)
+14. [Weekly reporting](#14-weekly-product-manager-check-in-template)
+
+---
+
+## 0. Read this first
+
+This is our shared execution guide, **not a replacement for the official CA1 specification**. We aim to deliver a reliable, reproducible, demonstrable MLOps solution that satisfies **every assessable requirement**, explains the engineering decisions clearly, and supports all team members at interview. An **A is our target, not a guaranteed outcome**.
+
+**Rules for everyone:**
+1. Read your GitHub Issue's **Description, Business Value, Acceptance Criteria, Dependencies, and Definition of Done** before starting.
+2. Work on an Issue-backed branch, create a pull request (PR), and obtain teammate review before merging where practicable.
+3. Communicate blockers early; **do not wait** for unrelated work. Parallelise using agreed interfaces and representative local test data.
+4. Every member must independently train **at least two model versions** and independently complete their **individual business analytics and Prefect submission**. **Do not share individual code or writing**.
+5. The lecturer's new interview batch URLs **must not be obtained or processed before the scheduled interview**.
+6. Use an approved **web-based** GenAI product for the specific robust-MLflow-architecture conversation (fewer than 10 prompting rounds); **do not use local coding agents** for that specified research task. Declare AI use accurately.
+7. Never commit secrets, access keys, passwords or real `.env` files.
+8. A PBI is only **Done** when its acceptance criteria and evidence are verified, not when code merely runs once.
+
+### Key submission dates (Singapore time)
+
+| Milestone | Deadline / window | Deliverable |
+|---|---|---|
+| **Part 1** | **Friday, 13 Nov 2026, 4:00 PM** | **One group Product Backlog submission template** on Brightspace |
+| **Part 2** | **Friday, 27 Nov 2026, 4:00 PM** | Group and individual submission materials; complete SPA survey and integrity / AI declaration requirements |
+| **Graded Scrum** | Weekly during lesson time (Weeks 5–6 identified for sync-ups) | Participation, task/PR review, contribution evidence |
+| **Interview** | Week 7; tutor assigns slot | ≤10-minute group presentation, live group and individual demos, individual Q&A |
+
+**Late penalty:** 50% deduction for a submission within 24 hours late; zero after 24 hours, subject to the documented exception policy. Plan to finish and verify submissions **before** deadline day.
+
+---
+
+## 1. Product vision and stakeholder value
+
+### Business problem
+SP-buy suffers economic and reputational harm from fraudulent orders and refund abuse. Manual review and hard-coded thresholds miss subtle cases and flag legitimate loyal customers. Trust & Safety analysts have limited time for daily investigation.
+
+### Product vision
+Build a repeatable fraud-detection MLOps workflow that turns newly supplied labelled CSV batches into **validated/cleaned data in AWS RDS**, **retrained and tracked ML experiments in MLflow**, and **up-to-date operational fraud insights via individually built Prefect flows**.
+
+### Stakeholders and outcomes
+
+| Stakeholder | Need | Evidence of value |
+|---|---|---|
+| **Trust & Safety Analyst** | Identify risky patterns while minimising unnecessary review of legitimate orders | Appropriate model evaluation, defensible feature choices, 3 insightful analytics queries and visualisations **per student** |
+| **Operations Team** | Supply labelled customer/order/fraud data with consistent processing | A pipeline accepts **three URLs**, validates, transforms and loads a new batch, then triggers retraining |
+| **IT Infrastructure Manager** | Maintain deployment and change configurations safely | Documented Docker/Elastic Beanstalk deployment, RDS, externalised configuration, more robust MLflow architecture |
+| **AI/ML Team** | Compare, iterate and select reliable models | MLflow runs, params/metrics/artifacts, team model comparison, two registered models, champion promotion |
+
+**Non-goals unless explicitly requested:** live transaction scoring API, customer-facing application, real-time streaming, dashboard web application, payment enforcement, automated order cancellation and additional AWS services not supported by Learner Lab. Avoid scope creep.
+
+---
+
+## 2. Rubric-driven delivery strategy
+
+The percentages below are **the rubric's allocation within CA1**, and together total 100%. CA1 contributes **40% of the module grade**.
+
+| Rubric | Weight | What we must visibly prove | Primary PBIs |
+|---|---:|---|---|
+| **A. Data Exploration** | **10%** | Data issues identified; justified cleaning, transformation and feature engineering; reusable Python code | 01–04 |
+| **B. ETL Pipeline** | **25%** | Python automation of new CSV ingestion → cleaning/transformation → AWS RDS → all team models → MLflow; clear code and reliable **≤3-minute** demo | 12–16, 23 |
+| **C. ML Experiments** | **25%** | Shared MLflow on Docker/Elastic Beanstalk, meaningful model iterations, experiment and artifact tracking, registry/champion, robust storage design | 05–11, 14 |
+| **D. Agile & Scrum** | **15%** | Complete, specific PBIs; sensible task allocation; active scrum, PR and teammate review | 21–22 |
+| **E. Interview / Demo / Q&A** | **10%** | Logical ≤10-minute presentation; live MLflow and fresh-batch processing; confidently explain code and architectural decisions | 16, 23–24 |
+| **F1. Individual Analytics** | **5%** | Each student independently produces **3 meaningful RDS-based business queries**, interprets and visualises results | 17–18 |
+| **F2. Individual Prefect** | **5%** | Each student's own local Prefect server/flow/tasks reliably gives refreshed analysis and minimum log output | 19 |
+| **F3. Advanced AWS Prefect** | **5%** | Healthy Prefect server on Elastic Beanstalk with RDS backend and connected flow service | 20 |
+
+**High-grade strategy (recommended, not additional formal requirements):**
+- Prioritise the **50% combined ETL + ML experiments** foundation early; don't trade reliable integration for an elaborate optional feature.
+- Make results explainable: show evidence of **why** an issue was cleaned, feature engineered, or model revised.
+- Treat **false positives, recall, precision, PR-AUC and review workload** as important fraud-detection trade-offs; do not rank models on accuracy alone when fraud is rare.
+- Demonstrate **repeatability and observability**: clean run identifiers, row-count checks, training metadata, meaningful logs and fast failure messages.
+- Protect time for F3 because it has **5% on the individual rubric**, even though the specification calls it an advanced challenge. **Ask the tutor to clarify whether and how F3 is awarded per member** and prioritise accordingly.
+- Prepare each member for individual Q&A on **the entire team's major architectural and modelling decisions**, not only their own code.
+
+---
+
+## 3. Data scope and controls
+
+### Supplied historical datasets
+
+| File | Purpose | Important fields from specification |
+|---|---|---|
+| `customers_base.csv` | Customer history | `country_code`, `customer_id`, `mobile_verified`, `num_orders_last_50days`, `num_cancelled_orders_last_50days`, `num_refund_orders_last_50days`, `total_payment_last_50days`, `num_associated_customers`, `first_order_datetime` |
+| `orders_base.csv` | Order records | `country_code`, `order_id`, `collect_type`, `payment_method`, `order_value`, `num_items_ordered`, `refund_value`, `order_date` |
+| `labels_base.csv` | Ground-truth label and customer-order link | `country_code`, `order_id`, `customer_id`, `is_fraud` (`1` fraud, `0` not fraud) |
+
+### New batches
+- Receive `customers_XXX.csv`, `orders_XXX.csv`, `labels_XXX.csv` through **public URLs**; the suffix varies.
+- Treat the three files as one logical batch. Require matching inputs; validate before modifying persistent tables.
+- Do not assume file row counts, order IDs, country codes, missingness or category levels match the base files.
+- Preserve traceability of input URLs/batch identifier, ingestion timestamp, accepted/rejected counts and execution status where feasible.
+- Use **explicit keys and join validation**. The labels table relates an order and customer; decide and document uniqueness at the appropriate level. Avoid accidental many-to-many row multiplication and silently unmatched labels.
+- Keep data cleaning rules identical for historical and newly received data; no ad hoc manual fixes during demo.
+
+### Critical model validity checks
+- Inspect missingness, duplicates, invalid dates/ranges, imbalanced classes, unusual transaction values and categorical levels **before** choosing transformations.
+- **Leakage audit:** check whether `refund_value`, prior refund statistics, or other fields would actually be available at order-review time. The specification lists them, but availability timing is not defined. Document assumptions and compare a leakage-safe feature subset if necessary. Never present post-outcome information as a genuine pre-shipment predictive feature without qualification.
+- Split train/validation/test with a documented reproducible strategy; consider customer-level grouping or time ordering where justified to avoid overly optimistic evaluation.
+- Fit preprocessing **only on training data**, then apply learned transformations to validation/test/new batches.
+- Avoid resampling the validation/test distributions. If handling imbalance, resample or apply class weights only to training.
+- Select a primary metric aligned to fraud-review capacity (e.g., precision/recall and PR-AUC) **after inspecting class prevalence**. Include confusion matrix, class-specific error analysis, and rationale for the champion.
+- Note: the official dataset schema alone does **not** establish actual data quality problems, fraud prevalence or best algorithm. These must be discovered empirically.
+
+---
+
+## 4. Proposed end-to-end architecture
+
+```text
+Historical CSVs (base)         New labelled batch (3 public URLs)
+          |                                    |
+          +------------------+-----------------+
+                             v
+                  Python ingestion + validation
+                             |
+                   Reusable clean / transform
+                             |
+                  AWS RDS MySQL (latest data)
+                      /                \
+                     v                  v
+           Team ML training         Individual analytics
+           (3 members × ≥2)          (each student ×3 queries)
+                     |                  |
+          MLflow tracking / registry    Prefect local flow/tasks
+            (Docker on EB)                |
+                     |                  v
+         Compare top 2; champion       Logs + plots / reports
+                     |
+                Model artifacts
+```
+
+**Required technologies:** Python, Jupyter, AWS RDS (MySQL), AWS Elastic Beanstalk + Docker (MLflow), MLflow tracking/model registry, and each student's Prefect installation. `pandas`, `matplotlib` and `seaborn` for individual analysis. The official brief requires AWS Academy Learner Lab-compatible services for MLflow improvements.
+
+### Proposed engineering interfaces (agree early)
+
+| Interface | Proposed contract | Responsible lead (TBD) |
+|---|---|---|
+| Input | CLI accepts `--customers-url`, `--orders-url`, `--labels-url`, with optional `--batch-id` | ETL lead |
+| Processing | Shared importable Python cleaning/feature functions, stable schema and versioned rules | Data lead |
+| RDS | Documented tables, primary keys, constraints, connection env variables and upsert/duplicate policy | DB lead |
+| Model training | Each member exports a callable training entrypoint accepting training data/context and returning run information | All 3; ML coordinator |
+| MLflow | Common tracking URI, experiment naming convention, logged params/metrics/model artifacts and registration criteria | MLflow lead |
+| Analytics | Each student's independently written Prefect flow queries latest team RDS and publishes output/logs | Each student |
+| Orchestration | One command to process batch, update RDS and run all training tasks | Integration lead |
+
+The CLI names, table design and code-level interfaces above are **recommendations**, not stated file or API requirements in the lecturer's brief. Decide them as a team and update this section once agreed.
+
+### Storage and deployment resilience
+- Initial MLflow: Docker container on Elastic Beanstalk with SQLite backend and local artifact folder is acceptable as the **baseline** in the specification.
+- Identify risks of container-local SQLite/artifacts (replacement/redeployment, persistence, contention and recoverability).
+- Complete the documented short **web-based GenAI** exploration; choose a better backend/artifact approach that works in Learner Lab, implement changes, test persistence where possible, and record changed services.
+- **Do not assume** S3 permissions, RDS engine/permissions or public-access rules: verify Learner Lab availability and budget first. Avoid exposing DB ports publicly where unnecessary.
+- Externalise RDS hostname/port/user/password, MLflow URI and other environment-specific values. Provide `.env.example` with placeholders only.
+
+---
+
+## 5. GitHub delivery structure
+
+### Current planning state (based on team conversation; verify in GitHub)
+- GitHub repository and Project exist.
+- **24 proposed PBIs across 6 Epics**; hybrid types: User Story, Feature, Technical Enabler, Spike and Bug (bugs created as needed).
+- Fibonacci story points are provisional, not a promised amount of hours.
+- Project views exist: **Product Backlog**, **Sprint Board**, **Sprint Planning**.
+- Team-oriented relationships are configured. **Blocked by** means a real prerequisite; **Relates to** indicates collaboration; **Parent / sub-issue** will be for sprint tasks.
+- Task owners and sprint assignments are not yet finalised.
+
+### Epics and traceability
+
+| Epic | Purpose | PBIs |
+|---|---|---|
+| **E1** Data Exploration & Preparation | Investigate, clean and engineer reliable features | 01–04 |
+| **E2** ML Model Development & Registry | Train, evaluate, log and champion models | 05–08 |
+| **E3** MLflow Infrastructure & Architecture | Shared deployment and more robust AWS design | 09–11 |
+| **E4** Automated ETL & Database | RDS, batch processing, retraining and reliability | 12–16 |
+| **E5** Business Analytics & Prefect | Independent insights, visualisations and flow automation | 17–20 |
+| **E6** Agile Management, Testing & Delivery | Backlog, scrum, integration and submission | 21–24 |
+
+### Complete PBI index
+
+| PBI | Title | Epic | Initial priority |
+|---|---|---|---|
+| 01 | Explore Historical Datasets | E1 | High |
+| 02 | Implement Reusable Data Cleaning | E1 | High |
+| 03 | Engineer Fraud Detection Features | E1 | High |
+| 04 | Validate Data Processing Consistency | E1 | Medium |
+| 05 | Develop Baseline Fraud Detection Models | E2 | High |
+| 06 | Optimise and Compare Model Versions | E2 | High |
+| 07 | Track Machine Learning Experiments | E2 | High |
+| 08 | Register and Promote Champion Model | E2 | High |
+| 09 | Deploy MLflow on AWS Elastic Beanstalk | E3 | High |
+| 10 | Investigate Robust MLflow Architecture | E3 | High |
+| 11 | Implement and Document Robust MLflow Infrastructure | E3 | High |
+| 12 | Provision AWS RDS MySQL Database | E4 | High |
+| 13 | Automate Data Ingestion and Loading | E4 | High |
+| 14 | Automate Retraining on Updated Data | E4 | High |
+| 15 | Externalise System Configuration | E4 | High |
+| 16 | Ensure Pipeline Reliability and Performance | E4 | High |
+| 17 | Develop Fraud Business Analytics | E5 | High |
+| 18 | Visualise Fraud Trends and Patterns | E5 | High |
+| 19 | Automate Analytics with Prefect | E5 | High |
+| 20 | Deploy Prefect to AWS | E5 | Low / advanced |
+| 21 | Establish GitHub Product Backlog | E6 | Critical |
+| 22 | Manage Sprint Planning and Scrum Reviews | E6 | High |
+| 23 | Verify End-to-End System Integration | E6 | High |
+| 24 | Prepare Submission and Live Demonstration | E6 | High |
+
+**PBI-17, PBI-18 and PBI-19 are tracking umbrellas**, **not substitutes** for three independent student implementations. During sprint planning each student should separately track their own work/evidence without sharing their individual submission code or writing.
+
+### Repository-specific onboarding and suggested layout (not asserted to exist)
+
+**Repository:** [`wqs0526/ecommerce-fraud-detection-mlops`](https://github.com/wqs0526/ecommerce-fraud-detection-mlops). The team reports that the repository is now public; its current folders and access permissions still need to be checked. Do **not** infer its current directory listing, commit history, GitHub Issue numbers or Project settings. QiShun should verify public access and grant teammates repository write and Project access as appropriate; avoid publishing credentials or unnecessary public data. **Do not create new folders purely to match this example**—first inspect `README`, branches, `.github/ISSUE_TEMPLATE`, existing files and team conventions.
+
+**First repository-fit checklist (QiShun leads; all verify):**
+- [ ] Confirm all three can view the repository, 24 Issues, all Project views and issue relationships.
+- [ ] Add `MASTER_PLAN.md` at repository root and link it from README; review it via PR.
+- [ ] Confirm `.gitignore`, `.env.example` and secret-handling instructions before adding cloud configuration.
+- [ ] Record actual directories and entrypoints in README; adapt suggested layout instead of assuming it exists.
+- [ ] Apply branch protection/review conventions supported by the repository/account; verify they do not block timely merges.
+- [ ] Set weekly GitHub Iterations to **7 days** and agree on exact start day.
+
+### Suggested repository layout (adapt after verification)
+
+```text
+/
+├── README.md
+├── MASTER_PLAN.md                  # this document
+├── .gitignore
+├── .env.example                    # placeholders, no secrets
+├── docs/
+│   ├── architecture.md
+│   ├── data_dictionary.md
+│   ├── decisions.md                 # decisions / rationale / trade-offs
+│   ├── deployment.md
+│   ├── demo_runbook.md
+│   └── testing.md
+├── notebooks/
+│   └── eda.ipynb
+├── src/
+│   ├── ingestion/
+│   ├── preprocessing/
+│   ├── database/
+│   ├── training/
+│   └── orchestration/
+├── infrastructure/
+│   └── mlflow/
+├── tests/
+└── individual/                     # only if lecturer permits this arrangement
+    ├── member_a/                   # independent authoring; don't share code/writing
+    ├── member_b/
+    └── member_c/
+```
+
+**Do not assume individual submissions belong in the shared repository.** The lecturer explicitly forbids sharing individual code or writing. Safer default: keep individual implementations in private, independently authored workspaces and only share non-code interface requirements and high-level progress; confirm permissible submission location with tutor.
+
+### Branch / PR convention
+- One Issue → one feature branch where practicable: `feature/pbi-13-batch-ingestion`, `infra/pbi-09-mlflow-eb`, `docs/pbi-24-demo-runbook`.
+- PR contains `Closes #<issue>` where applicable, brief summary, test evidence, screenshots/log references when useful, and known limitations.
+- At least one teammate reviews major shared PRs; reviewer checks requirements and tests, not just formatting.
+- Avoid direct merges to main for major changes; resolve conflicts and keep a stable demo-capable main branch.
+- Update Project status and relevant Issue comments during scrum. Never close a partially completed PBI without documenting the gap.
+
+### Scrum operating rhythm (suggested)
+- **Backlog refinement:** Product Manager reviews priority, acceptance criteria, dependencies and provisional estimate with team.
+- **Sprint planning (Week 4):** pick a realistic subset; split into sub-issues; assign an owner/reviewer; define sprint goal.
+- **Weekly graded scrum:** each member states completed evidence, next work, blockers, dependencies and PRs reviewed. Show board changes and meaningful technical decisions.
+- **Mid-sprint integration sync (recommended):** test shared interfaces, merge small PRs early and time the pipeline.
+- **Sprint review / retrospective:** demonstrate actual working results, record failed assumptions and adjust backlog/estimates.
+
+---
+
+## 6. Team roles and collaboration
+
+The following shared-workstream leads are **proposed** and require agreement during sprint planning. Each PBI should have a named owner and reviewer. Ownership of shared work does not replace the individual requirements.
+
+| Member | Shared focus | Proposed lead PBIs | Collaboration and review |
+|---|---|---|---|
+| **QiShun — Product Manager** | Product backlog, architecture, data contracts and cross-service integration | 21–22, 01, 03, 14, 16, 23 | Coordinates stakeholder/rubric alignment; reviews data and infrastructure interfaces; leads integration demos |
+| **Darryan** | Model experimentation and MLflow platform | 05–08, 09–11 | Maintains shared experiment logging/registry conventions and reviews training interfaces with team |
+| **Ethan** | Reusable data processing, database, configuration and verification | 02, 04, 12, 15; defined components of 13 and 23 | Coordinates schema/ETL contracts, produces database and validation tests, and reviews handoffs with team |
+
+**Shared delivery:** PBI-13 (batch ingestion) and PBI-24 (submissions/presentation) are coordinated across all three. QiShun leads integration of PBI-13, while Ethan owns its database/validation components and Darryan validates its model-training interface. The team agrees final ownership and workload before moving PBIs into a sprint.
+
+**All three independently complete:** at least two ML model versions each; three meaningful business analytics queries each; individually authored visualisations/analysis and local Prefect flow each; individual submissions and Q&A. Do **not** share individual code or writing, as specified by the lecturer.
+
+### Independent deliverables tracker
+
+| Requirement | QiShun | Darryan | Ethan |
+|---|:---:|:---:|:---:|
+| ML model version 1 and 2, logged and explained | ☐ | ☐ | ☐ |
+| Three independently authored business queries | ☐ | ☐ | ☐ |
+| Independently authored plots and interpretations | ☐ | ☐ | ☐ |
+| Own working Prefect server, tasks and flow | ☐ | ☐ | ☐ |
+| Own flow demonstrated within 180 seconds | ☐ | ☐ | ☐ |
+| Individual submission and declarations completed | ☐ | ☐ | ☐ |
+| Understand major team architecture and modelling decisions | ☐ | ☐ | ☐ |
+
+### Team working agreements
+
+- Weekly planning, sprint review and retrospective follow the **one-week iteration** cadence; attend lecturer-scheduled scrum meetings.
+- Plan based on actual availability and use Fibonacci story points for relative complexity, not hours. Split oversized PBIs into reviewable sub-issues.
+- Each shared PBI has an owner, a reviewer, testable acceptance criteria and evidence linked in its GitHub Issue.
+- Use early PRs, interface contracts and short integration checks so different workstreams can progress in parallel.
+- Support cross-training on architecture decisions so every member can answer individual Q&A.
+- Do not post credentials or independently authored submission code/writing into shared discussions.
+
+---
+
+## 7. One-week sprint roadmap and milestones
+
+**Cadence agreed by the team:** **7 calendar days per sprint**. Proposed boundaries below use **Monday–Sunday** solely as a planning convention; align GitHub Iteration start/end days to the lecturer's actual Week 3/4/5/6 lesson calendar. The specification does **not** define a Monday sprint start. Keep milestone deadlines as fixed calendar dates, even if they fall inside a sprint.
+
+| Sprint | Suggested dates (SGT) | Sprint goal and planned focus | Reviewable evidence / gate |
+|---|---|---|---|
+| **Sprint 0 — Backlog sign-off** | **26 Oct–1 Nov** | GitHub Issue/label/field/view/relationship setup; final rubric cross-check; team ownership discussion | Confirm 24 PBIs, dependencies and stakeholder value; status **GitHub-only completed**, code not started |
+| **Sprint 1 — Foundation contracts** | **2–8 Nov** | **QiShun:** shared EDA/data contract and review; **Darryan:** MLflow Docker smoke test and baseline training skeleton; **Ethan:** RDS connection/schema and config checklist. Team planning/estimates; PBI-01 EDA, PBI-12 RDS design/provision, PBI-09 MLflow Docker baseline, PBI-15 env configuration; define ETL↔training interfaces | EDA initial findings; reproducible DB connection and MLflow smoke run **where feasible**; no unsupported Done claims |
+| **Sprint 2 — Backlog submission + early build** | **9–15 Nov** | **QiShun:** reusable feature contract and ETL integration skeleton; **Darryan:** model baselines and tracked runs; **Ethan:** cleaning/validation tests and DB loading smoke test. Refine PBI-02/03/04; PBI-05 baseline prototypes; finalize PB submission; maintain setup tasks | **Part 1 deadline Fri 13 Nov 4 PM**: reviewed template submitted and receipt retained; initial data/model evidence |
+| **Sprint 3 — End-to-end vertical slice** | **16–22 Nov** | **QiShun:** orchestration/integration; **Darryan:** MLflow registry and model tuning support; **Ethan:** test batch ingestion verification and targeted defects. PBI-07, 13, 14: one-command batch→RDS→all-model runs→MLflow; iterate PBI-06 and model registry PBI-08; independent PBI-17/18/19 work; PBI-10 research and PBI-11 upgrade | End-to-end permitted sample batch; 3×2 model versions; top-two registry/champion; analytics progress each member |
+| **Sprint 4 — Submission and hardening** | **23–29 Nov** | **All:** independent Prefect demo rehearsals and final model checks; **QiShun:** timed integration run; **Darryan:** MLflow run/registry proof; **Ethan:** verification checklist and repeatability tests. PBI-16/23 performance/reliability, individual Prefect dry runs, presentation, MLflow robustness and PBI-20 advanced attempt if feasible; finish paperwork early | **Part 2 Fri 27 Nov 4 PM**: group+individual deliverables, SPA and declarations submitted; timed dry-run records |
+| **Interview readiness** | **Week 7 — tutor schedule TBA** | Maintain healthy services; rehearse 10-minute presentation and live unseen-batch run; quiz all three on shared decisions | Group and each individual pipeline **≤180 s**; tutor URLs used **only when handed over at interview** |
+
+**Schedule risks:** As of 31 October there are fewer than four weeks before Part 2; this is an aggressive timeline. If GitHub-only work is complete and nothing is coded, run infrastructure/data/model prototyping **in parallel immediately**, while maintaining Part 1 documentation. Escalate blockers at the earliest one-week sprint check-in, not after the next iteration. Do not defer individual Prefect work entirely until Sprint 4.
+
+### One-week sprint operating procedure
+
+- **Day 1 — Planning (15–30 min):** review acceptance criteria, estimate capacity, select sprint goal, put selected PBI sub-issues into GitHub Iteration, assign owners and PR reviewers.
+- **Days 2–5 — Build and daily async check-in:** comment in assigned Issues with `Done / Next / Blocker / Evidence`; open small PRs; hold one midweek integration smoke test.
+- **Day 6 — Review and QA:** demonstrate actual outputs, verify acceptance criteria, measure elapsed pipeline time, review PRs, reassign cross-component blockers.
+- **Day 7 — Retrospective and replan:** capture improvements, carry unfinished work explicitly, update GitHub views and next-sprint backlog.
+- **Scheduled graded lesson scrum always takes precedence** over this illustrative rhythm; record attendance, peer reviews and decisions as evidence.
+
+### Sprint goal and completion standards
+
+A sprint is **not completed** simply because tickets moved to Done. Its planned demonstration must be usable from the latest integrated code, accepted by at least one teammate, and accompanied by linked evidence. Carry unfinished PBIs forward; do not silently reduce their acceptance criteria to fit the seven-day window. If a weekly sprint starts on another day, update dates in the GitHub Iteration field and in this plan consistently.
+
+
+## 8. Technical Definition of Done
+
+### Data / feature engineering (PBI-01–04)
+- [ ] Jupyter EDA documents actual discovered issues with tables/plots.
+- [ ] Cleaning/feature rules have business and technical rationale, plus unit tests where appropriate.
+- [ ] CSV joining and identifier uniqueness checked; no accidental row loss or duplication.
+- [ ] Train/validation/test leakage and temporal availability assumptions documented.
+- [ ] Reusable functions produce consistent schema for base and new batches.
+
+### ML development / tracking (PBI-05–08)
+- [ ] Each member has ≥2 distinguishable model versions, with a documented improvement hypothesis.
+- [ ] Evaluation includes appropriate metrics for class imbalance and false positives, not accuracy alone.
+- [ ] Metrics, key parameters, model files and run identity accessible in MLflow.
+- [ ] Team comparison recorded; two models registered; champion designation evident live.
+- [ ] Model training callable by automated orchestration, not only interactive notebooks.
+
+### Cloud / data pipeline (PBI-09–16)
+- [ ] MLflow responds on Elastic Beanstalk; Docker setup repeatable and documented.
+- [ ] RDS schema and connection documented; secrets not committed.
+- [ ] Ingestion accepts three publicly accessible URLs for an unknown suffix batch.
+- [ ] Validation, cleaning, transformation, load and all training tasks run through one controlled entrypoint.
+- [ ] Outputs can be checked in RDS and MLflow, with meaningful batch-tagged logs.
+- [ ] Error handling prevents silently corrupted or double-counted data.
+- [ ] Realistic end-to-end group execution consistently completes **≤180 seconds** in rehearsals.
+- [ ] Robust MLflow alternative explored via compliant GenAI conversation; changed services documented and tested.
+
+### Independent business analytics / Prefect (PBI-17–20)
+- [ ] Each student's work is independently authored, using current RDS data.
+- [ ] Three meaningful business questions per student have queries, explanations and relevant plots.
+- [ ] Local Prefect server and flow/tasks function; each run refreshes results and shows at least query results in flow logs.
+- [ ] Individual flow demo consistently completes **≤180 seconds**.
+- [ ] If attempted: AWS Prefect server healthy on EB, RDS backend and connected flow service verified.
+
+### Scrum / delivery (PBI-21–24)
+- [ ] GitHub board, PBIs, sprint tasks and dependencies reflect real work.
+- [ ] Substantial shared PRs reviewed; review comments and resolutions visible.
+- [ ] Individual contributions supported by commits, PRs, experiments, tasks and demo evidence.
+- [ ] All deliverables and declarations submitted; 10-minute presentation and Q&A rehearsed.
+
+---
+
+## 9. Test strategy and evidence checklist
+
+### Automated tests (recommended)
+
+| Test layer | Scenario | Evidence |
+|---|---|---|
+| **Schema** | Missing column, wrong type, empty file, invalid label, unknown category | Explicit validation report; no silent write |
+| **Keys** | Duplicated IDs, unmatched labels, join multiplicity | Input/output counts and deterministic policy |
+| **Transformation** | Base vs suffix batches; date parsing; null/negative values; unseen categories | Stable output columns and unit test assertions |
+| **Database** | Fresh insert, retry, rerun same batch, partial failure | Reconciled counts; no unintended duplicates |
+| **ML** | Reproducibility, no preprocessing leakage, class imbalance | Documented split, metrics and saved model |
+| **MLflow** | Training run parameters/metrics/artifact; registry promotion | Live dashboard confirmation |
+| **End-to-end** | Three local/publicly accessible permitted test URLs | One-command run → RDS changes → all runs visible |
+| **Performance** | Cold/warm realistic tests, 2+ consecutive runs | Timed group and per-member results ≤180 s |
+| **Prefect** | RDS refresh, flow logs, charts after new batch | Each member's own flow run evidence |
+| **Recovery** | Temporary network timeout or unavailable service | Actionable failure, safe retry, no data corruption |
+
+### Timing budget (planning target, not a measured result)
+Aim to finish **comfortably below** the formal 180-second maximum. Measure actual timings on available hardware and cloud resources. Use a timing table in test logs:
+
+| Stage | Measured time (s) | Notes |
+|---|---:|---|
+| URL retrieval + validation | TBD | Three CSVs |
+| Clean + transform | TBD | Existing + new data handling |
+| RDS writes + verification | TBD | Network overhead |
+| All team model trainings + MLflow logging | TBD | Must include all members' tasks |
+| **Group total** | **TBD / 180 max** | Test repeatably |
+| Member 1 Prefect total | TBD / 180 max | Independent run |
+| Member 2 Prefect total | TBD / 180 max | Independent run |
+| Member 3 Prefect total | TBD / 180 max | Independent run |
+
+Do **not** quietly omit model tasks to meet the time limit. Optimise algorithm choices, feature computation and remote requests while preserving required behaviour.
+
+### Evidence store (suggested)
+Keep non-sensitive screenshots/log snippets and short decision records in `docs/` or linked GitHub Issue/PR comments. Capture enough to substantiate claims, but plan to show the **actual live MLflow dashboard** in the interview, as required.
+
+---
+
+## 10. Model experiment and promotion protocol
+
+1. Agree on the **same evaluation dataset/split and metrics** for the team, keeping a true holdout untouched during tuning.
+2. Each member logs v1 baseline and v2 meaningful improvement, noting the hypothesis and changed parameters/features.
+3. Log dataset/batch version, model family, run owner, parameters, training duration, metrics and artifact metadata to MLflow where feasible.
+4. Compare **precision, recall, F1, PR-AUC**, false-positive counts and operational review trade-offs as appropriate to observed imbalance; include runtime for demo feasibility.
+5. Select **top two models** through a documented team review; register them in MLflow and designate a **champion**.
+6. When new model versions are trained, compare fairly against champion and update the promotion decision with rationale.
+7. Never claim generalisation from training-only scores; explain limitations and any uncertainty.
+
+**Suggested naming:** `batch_<suffix>__<member>__<model>__v<version>`; adapt to MLflow's run naming conventions. Avoid putting credentials or sensitive personal data in run names.
+
+---
+
+## 11. Demo runbook
+
+### Pre-demo checks (permitted before interview)
+- [ ] Laptop(s), Python environment, dependencies and permitted network access validated.
+- [ ] AWS RDS reachable; MLflow Elastic Beanstalk deployment healthy; appropriate local Prefect services ready.
+- [ ] Existing history available; trained models / registry visible.
+- [ ] Verify all environment variables are set without exposing credentials.
+- [ ] Team knows exactly which person runs each step and who explains results.
+- [ ] Test commands on **allowed non-interview data only**.
+
+### Live group sequence (tutor-supplied URLs only at assigned slot)
+1. Receive the three URLs from tutor.
+2. Run the documented one-command ETL interface, passing **only those supplied URLs**.
+3. Show concise batch input, processed row counts and RDS query evidence of newly inserted data.
+4. Show MLflow **live**: fresh experiment runs for all three members, parameters, metrics/artifacts, model comparison, registered top two and champion.
+5. Report measured elapsed time and any controlled validation messages; finish group pipeline within 3 minutes.
+6. Each member independently executes their own Prefect flow and shows refreshed query output / charts within 3 minutes per flow.
+
+### Proposed ≤10-minute presentation outline
+
+| Time | Topic |
+|---|---|
+| 0:00–1:00 | Problem, stakeholders and solution objective |
+| 1:00–2:30 | EDA findings, cleaning and feature engineering rationale |
+| 2:30–4:30 | Models, comparison, iterative improvement and live MLflow dashboard |
+| 4:30–6:00 | RDS/MLflow architecture and robustness decisions |
+| 6:00–7:30 | Automated ETL/retraining flow and reliability strategy |
+| 7:30–8:30 | Independent analytics / Prefect value (overview only) |
+| 8:30–9:30 | Team contribution split, scrum evidence, limitations |
+| 9:30–10:00 | Buffer / transition to separately assessed live demo |
+
+**Note:** Tutor may structure the interview so the timed live pipelines occur after presentation. Verify the exact format in advance; do not attempt to cram the full live demo inside the 10-minute presentation unless instructed.
+
+### Individual Q&A preparation
+Every student should be able to explain: schema keys, data cleaning rationale, leakage considerations, class imbalance, metric choice, why model v2 changed, why top two/champion were selected, MLflow's backend/artifact architecture, Docker/EB/RDS configuration, safe secrets, orchestration, performance bottlenecks, exception handling, own independent three queries and Prefect code, and meaningful contribution to team PRs.
+
+---
+
+## 12. Risks, mitigations, escalation
+
+| Risk | Impact | Mitigation / trigger |
+|---|---|---|
+| AWS Learner Lab service restrictions / expiration | Service unavailable at demo | Verify allowed services early; document repeatable deployment; rehearse restart; keep local development fallback (not substitute for graded AWS deployment) |
+| MLflow artifact/DB lost on container recreation | Experiment evidence disappears | Improve storage after research; backup/restore plan, recreate-and-retest exercise |
+| End-to-end runtime >180 s | Direct demo marks at risk | Benchmark early; profile training/data transfer; use appropriate fast models without omitting member tasks |
+| Input batch contains unexpected data | Pipeline fails or corrupts data | Schema validation, safe joins, explicit failures, local variation tests |
+| Fraud-target leakage | Misleadingly strong metrics | Time-of-prediction audit and leakage-safe evaluation |
+| Individual work shared inadvertently | Academic integrity risk | Independent coding/writing; clarify repository/submission rules with tutor |
+| Too much time on advanced AWS Prefect | Core pipeline incomplete | Gate advanced work after stable group pipeline; clarify F3 grading |
+| Unbalanced team workload | Delays and weak contribution evidence | Assign reviewer/owner, weekly sync and reallocate based on evidence |
+| Last-minute merge or cloud breakage | Demo failure | Freeze feature additions before submission; tested main branch and runbook |
+| Tutor batch accessed prematurely | Penalty | Strictly wait until assigned interview slot; use permitted mock data for rehearsals |
+
+**Escalation rule:** If a blocker threatens a milestone, comment on the GitHub Issue, notify the other two team members at the next available sync, identify a workaround and update sprint scope. Do not silently defer the problem.
+
+---
+
+## 13. Team decisions to confirm
+
+This plan intentionally leaves unresolved project decisions visible rather than inventing them.
+
+- [ ] Names / GitHub usernames for 3 members; agree on technical leads and reviewers.
+- [ ] Link to actual GitHub repository and Project; update markdown links once known.
+- [ ] Confirm actual dataset files have been received; record real observations after EDA.
+- [ ] Agree on Python environment, dependencies and model interfaces.
+- [ ] Choose AWS RDS schema and ingestion idempotency strategy.
+- [ ] Confirm MLflow deployment/storage design within Academy Learner Lab and the compliant GenAI research record.
+- [ ] Finalise metrics, data split and champion-promotion rule after observing dataset characteristics.
+- [ ] Decide where independent submissions are stored **without sharing independent code/writing**.
+- [ ] Clarify advanced F3 Prefect grading per individual with module tutor.
+- [ ] Obtain official PB and Part 2 templates; check submission requirements and file naming.
+- [ ] Confirm exact Week 7 interview slot and service access conditions.
+
+---
+
+### Additional decisions
+- [ ] **QiShun / Darryan / Ethan** accept or adjust the proposed ownership and shared review arrangements; nominate a lead/reviewer per PBI during sprint planning.
+- [ ] Agree actual **one-week sprint start day**, iteration naming and lesson-time scrum schedule.
+- [ ] **Verify repository and Project access for all members**, give Darryan and Ethan necessary write/Project access, verify AWS Academy Learner Lab, and record the actual directory structure before creating any suggested folders.
+- [ ] Agree how to split and estimate three members' independent PBI-17/18/19 work without sharing individual code or writing.
+- [ ] Agree minimum vertical-slice completion by Sprint 3 and fall-back plan if cloud services are unavailable.
+
+## 14. Weekly Product Manager check-in template
+
+```markdown
+### Scrum update — YYYY-MM-DD
+**Sprint goal:**
+**Completed PBIs / PRs (links):**
+**Evidence / demo:**
+**In progress (owner, remaining work):**
+**Blockers / dependencies / risks:**
+**Models logged per member:** Member 1 __ / Member 2 __ / Member 3 __
+**Independent analytics/Prefect status:** M1 __ / M2 __ / M3 __
+**Group pipeline timing:** __ s (target ≤180 s)
+**Individual pipeline timings:** M1 __ s / M2 __ s / M3 __ s (each ≤180 s)
+**Decision(s) and rationale:**
+**Next sprint commitments:**
+**Reviewer confirmations:**
+```
+
+---
+
+## 15. Definition of overall project completion
+
+The team can legitimately declare CA1 delivery-ready only when:
+
+- [ ] Official Part 1 PB template submitted on time; all stakeholder requirements trace to PBIs.
+- [ ] EDA and cleaning/feature engineering are evidenced and reusable.
+- [ ] RDS stores processed historical and new data, with validated schema and operational loading.
+- [ ] Three team members each have **≥2** model versions and MLflow experiment evidence.
+- [ ] Two leading models are in the registry and champion selection is demonstrable.
+- [ ] Shared MLflow is running on Docker/Elastic Beanstalk; architecture improvements researched and implemented/documented as required.
+- [ ] A new **tutor-provided** batch can be ingested **during the interview**, retrain all models, and log fresh runs **within 180 s**.
+- [ ] Each member independently provides three meaningful RDS analytics queries, charts/insights and a working Prefect flow **within 180 s**.
+- [ ] Advanced Prefect AWS component attempted/completed according to confirmed grading strategy and available time.
+- [ ] Submissions, SPA and academic integrity/AI declarations completed; contribution evidence is defensible.
+- [ ] ≤10-minute group presentation, live demonstration and individual technical Q&A have been rehearsed.
+
+**Final principle:** **Prove a working, repeatable system with measurable evidence.** Good GitHub organisation supports assessment, but does not replace quality ML experiments, resilient data pipelines, independent student work or a successful live demonstration.
+
+---
+
+*Maintained by the Product Manager. Changes to requirements or acceptance criteria should be reviewed with the team and reflected in the relevant GitHub Issues. If this file conflicts with the lecturer's specification, the specification takes precedence.*
